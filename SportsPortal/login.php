@@ -20,12 +20,11 @@ if (isset($_POST['user']) && isset($_POST['user_pass']) && isset($_POST['admin']
 	$x1 = mysqli_num_rows($result1);
 	$x2 = mysqli_num_rows($result2);
 	$x3 = $x1*$x2;
-	if($x3==1){
-		$_SESSION['user'] = $user;
-		$_SESSION['admin']=$admin;
-		$current_timestamp = time();
-		$current_timestamp_date = date("d F Y H:i:s", $current_timestamp);
-		$query3 = "INSERT INTO Register (user,sysadmin,login) VALUES ('".$user."','".$admin."','".$current_timestamp_date."')";
+	$_SESSION['user'] = $user;
+	$_SESSION['admin']=$admin;
+	if($x3==1 && isset($_SESSION['user']) && isset($_SESSION['admin'])){
+		//$current_timestamp_date = date("d F Y H:i:s", $current_timestamp);
+		$query3 = "INSERT INTO Register (user,sysadmin,login,logout) VALUES ('".$user."','".$admin."',now(),now())";
 		$result3 = mysqli_query($db,$query3) or die(mysqli_error($db));
 		header('Location: http://127.0.0.1/SportsPortal/hello.php');
 	}
@@ -36,6 +35,8 @@ if (isset($_POST['user']) && isset($_POST['user_pass']) && isset($_POST['admin']
 		if($x2!=1){
 			$adminerror = "invalid credentials";
 		}
+		session_unset();
+		session_destroy();
 	}
 }
 ?>
