@@ -35,6 +35,9 @@ if (isset($_POST['user']) && isset($_POST['user_pass']) && isset($_POST['admin']
 		if($x2!=1){
 			$adminerror = "invalid credentials";
 		}
+		else{
+		 	echo "some technical error";
+		}
 		session_unset();
 		session_destroy();
 	}
